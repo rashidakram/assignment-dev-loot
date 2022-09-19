@@ -1,0 +1,65 @@
+version: '3.7'
+services:
+  webapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: php_service
+    container_name: webapp
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: webapp_service
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - /var/www/vendor
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    depends_on:
+      - dbserver
+    networks:
+      - main_network
+  #Nginx Service
+  webserver:
+    image: nginx:alpine
+    container_name: webserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8001:80"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+    depends_on:
+      - webapp
+      - dbserver
+    networks:
+      - main_network
+  
+  # MariaDB - Service
+  dbserver:
+    image: mariadb:10.5.6
+    container_name: dbserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8036:3306"
+    environment:
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mariadbdata:/var/lib/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - main_network
+#Docker Networks
+networks:
+    main_network:
+      driver: bridge
+      name: main_network
+
+#Volumes
+volumes:
+  mariadbdata:
+    driver: local

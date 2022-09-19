@@ -1,0 +1,19 @@
+.navbar-logo{
+  width: 55px;
+}
+.top-spacer{
+  margin-top: 15px;;
+}
+body{
+  background-image: url('/images/bg.jpg');
+  background-position: center;
+  background-size: cover;
+  width: 100%;;
+}
+.login-bg, .register-bg{
+  background-color: #e6e6e6;
+  opacity: 0.8;
+  width: 100%;
+  padding: 15px 15px 15px 15px;
+  margin-bottom: 50px;
+}
