@@ -1,1 +1,12 @@
-# assignment-dev-loot
+# How to setup
+- clone the repository
+- run docker-compose up -d --build from the root
+- access database container from docker
+- create database
+- create a test database for unit testing
+- copy .env and .env.testing
+- add credentials from step 4 & 5 in the files respectively
+- access application containter (webapp)
+- run migrations with php artisan migrate
+- the server will be running at http://localhost:8001
+- to run the tests access webapp container and run php artisan test
