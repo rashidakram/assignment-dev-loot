@@ -10,3 +10,4 @@
 - run migrations with php artisan migrate
 - the server will be running at http://localhost:8001
 - to run the tests access webapp container and run php artisan test
+- refer to example_file.png in the root to see the application in action
